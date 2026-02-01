@@ -1,0 +1,519 @@
+const ConfirmationMail = `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Order Confirmation | String Studio</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #FAFAFA;
+            color: #1F1F1F;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 32px auto;
+            background-color: #FFFFFF;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid #E5E7EB;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 48px 0 32px 0;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: #1F1F1F;
+        }
+
+        .logo-subtitle {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-top: 4px;
+            color: #6B7280;
+        }
+
+        /* Hero Image Section */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background-color: #F9FAFB;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                height: 340px;
+            }
+        }
+
+        .hero-blur {
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 280px;
+            height: 280px;
+            background-color: #98FFD5;
+            border-radius: 50%;
+            opacity: 0.25;
+            filter: blur(50px);
+            z-index: 1;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, #FFFFFF, transparent);
+            z-index: 3;
+            height: 80px;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 40px 32px 64px 32px;
+        }
+
+        @media (min-width: 768px) {
+            .content {
+                padding: 48px 64px 80px 64px;
+            }
+        }
+
+        .status-badge {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 24px auto;
+            padding: 6px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background-color: #E6FFEF;
+            color: #00854D;
+            border-radius: 2px;
+        }
+
+        .main-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            color: #1F1F1F;
+            font-weight: 400;
+        }
+
+        .main-heading-italic {
+            font-style: italic;
+        }
+
+        .prose-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .prose-greeting {
+            font-size: 18px;
+            color: #1F1F1F;
+            margin-bottom: 12px;
+        }
+
+        .prose-text {
+            color: #6B7280;
+            font-weight: 400;
+            font-size: 15px;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background-color: #98FFD5;
+            color: #1F1F1F;
+            border: none;
+            cursor: pointer;
+            border-radius: 2px;
+            text-decoration: none;
+            margin: 0 auto;
+            width: fit-content;
+            transition: transform 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .cta-icon {
+            margin-left: 8px;
+            font-size: 18px;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: #E5E7EB;
+            margin: 48px 0;
+        }
+
+        /* Order Summary */
+        .summary-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 32px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+            background-color: #F3F4F6;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            flex-grow: 1;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: #1F1F1F;
+        }
+
+        .product-specs {
+            font-size: 13px;
+            color: #6B7280;
+            margin-top: 4px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .price-summary {
+            border-top: 1px dashed #E5E7EB;
+            padding-top: 24px;
+            max-width: 280px;
+            margin-left: auto;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 8px;
+        }
+
+        .price-row-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1F1F1F;
+            padding-top: 12px;
+            margin-top: 12px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        /* Production Process */
+        .process-section {
+            background-color: #F9FAFB;
+            padding: 32px 24px;
+            border-radius: 4px;
+            margin: 48px 0;
+            border: 1px solid #F3F4F6;
+        }
+
+        .process-title {
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 32px;
+            color: #6B7280;
+        }
+
+        .process-timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .process-line {
+            position: absolute;
+            top: 6px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background-color: #E5E7EB;
+            z-index: 1;
+        }
+
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .process-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #D1D5DB;
+            border: 3px solid #F9FAFB;
+        }
+
+        .process-dot.active {
+            background-color: #98FFD5;
+            border-color: #E6FFEF;
+            box-shadow: 0 0 0 4px #E6FFEF;
+        }
+
+        .process-label {
+            font-size: 10px;
+            margin-top: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #1F1F1F;
+        }
+
+        .process-label.inactive {
+            color: #9CA3AF;
+        }
+
+        /* Address Grid */
+        .address-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        @media (max-width: 600px) {
+            .address-section {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        .address-block h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .address-block p {
+            font-size: 14px;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+
+        .support-link {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #1F1F1F;
+            text-decoration: none;
+            border-bottom: 2px solid #98FFD5;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #F9FAFB;
+            padding: 48px 32px;
+            text-align: center;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: #9CA3AF;
+            margin-bottom: 8px;
+        }
+
+        .footer-link {
+            color: #6B7280;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .product-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .main-heading {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-text">String</span>
+                <span class="logo-subtitle">Studio</span>
+            </div>
+        </header>
+
+        <div class="hero">
+            <div class="hero-blur"></div>
+            <img alt="Artisan String Art" class="hero-image"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRZPy3ny6PGniaVMnUvUoGJ2Lt9eAL_jnWGL2I3_1gqaDOT0IAMSLBIqBdnXBRlSThbatLFZSvebvobHEzStTHjXLlAe59Vbv2Hyve59lzIpu-jaL8LajwxEaOXbsowKRUMkVIHe9lBpv7PvaypMAI0UsvJzSrQvVYWdbbhrPudeCSja4YkGHf9gNXorCcJloPMEVyx3mhwJIOdBlvGT9i9T5C8CbGV_TOepx8cUTvSv-OsSYw7Z7RRiSe29M0X1RDWCYdfrfWZSTn" />
+            <div class="hero-gradient"></div>
+        </div>
+
+        <div class="content">
+            <span class="status-badge">Order #80294 Confirmed</span>
+
+            <h1 class="main-heading">Order Received & <br><span class="main-heading-italic">In Progress</span></h1>
+
+            <div class="prose-section">
+                <p class="prose-greeting">Dear <strong>Sophia</strong>,</p>
+                <p class="prose-text">Your order is in good hands—our artisans are now preparing to weave your memories
+                    into art. We are reviewing every detail to ensure perfection.</p>
+            </div>
+
+            <a href="#" class="cta-button">
+                View Order Status
+                <span class="material-icons cta-icon">arrow_forward</span>
+            </a>
+
+            <div class="divider"></div>
+
+            <div class="summary-section">
+                <h3 class="summary-title">Order Summary</h3>
+
+                <div class="product-item">
+                    <div class="product-image">
+                        <img alt="Portrait String Art"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwndUizXD8UgjVBiSZKdQbwodcGSpjX1ILULMpfnz3d9b7kjcQJs7HOeNDV6GiAf2NdV0v5EyDTkttXUEbmL9CpIq18z1Mj3vVtMeJuNYEZxN63y6daweg5pPP9nElZ7QVg4rc7o_YB_8ru8VtM0P1Oi9GrcOxzqa99gctsrnTRaITu-5uvZlIOiu1mmezsE8vOQsSMGGN59IUB5dFscsLdgAAHidzrwfrzpGDAAbPSvGjzYJwsVYefZRSSA1LohxLrTvBjJLVzmwb" />
+                    </div>
+                    <div class="product-details">
+                        <h4 class="product-name">Portrait of a Loved One</h4>
+                        <p class="product-specs">Size: Medium (24" x 36")<br>Frame: Walnut Wood</p>
+                    </div>
+                    <div class="product-price">$245.00</div>
+                </div>
+
+                <div class="price-summary">
+                    <div class="price-row"><span>Subtotal</span><span>$245.00</span></div>
+                    <div class="price-row"><span>Shipping</span><span>Free</span></div>
+                    <div class="price-row"><span>Taxes</span><span>$12.50</span></div>
+                    <div class="price-row-total"><span>Total</span><span>$257.50</span></div>
+                </div>
+            </div>
+
+            <div class="process-section">
+                <h4 class="process-title">Production Process</h4>
+                <div class="process-timeline">
+                    <div class="process-line"></div>
+                    <div class="process-step">
+                        <div class="process-dot active"></div>
+                        <span class="process-label">Received</span>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-dot"></div>
+                        <span class="process-label inactive">Weaving</span>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-dot"></div>
+                        <span class="process-label inactive">Shipped</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="address-section">
+                <div class="address-block">
+                    <h5>Shipping Address</h5>
+                    <p>Sophia Anderson<br>124 Artistry Lane, Apt 4B<br>Design District, NY 10013</p>
+                </div>
+                <div class="address-block">
+                    <h5>Need Assistance?</h5>
+                    <p>If you have specific instructions, please reply to this email within 24 hours.</p>
+                    <a class="support-link" href="#">Contact Support</a>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p class="footer-text">© 2024 String Studio. Balaju, Kathmandu, Nepal</p>
+            <p class="footer-text">
+                <a class="footer-link" href="#">Unsubscribe</a> from these notifications.
+            </p>
+        </footer>
+    </div>
+</body>
+
+</html>`
+export default ConfirmationMail;
