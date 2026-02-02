@@ -1,515 +1,216 @@
-const ConfirmationMail = `<!DOCTYPE html>
-<html lang="en">
+const ConfirmationMail =
+    `<!DOCTYPE html>
+
+<html class="light" lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Order Confirmation | String Studio</title>
+    <title>Order Received - String Studio Nepal</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&amp;family=Manrope:wght@200..800&amp;display=swap"
         rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#94FFC4",
+                        "accent": "#94ffc4",
+                        "background-light": "#f5f8f7",
+                        "background-dark": "#102218",
+                        "text-main": "#0d1c13",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "serif": ["Cinzel", "serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem", "sm": "0.125rem" },
+                },
+            },
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: #FAFAFA;
-            color: #1F1F1F;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            max-width: 640px;
-            margin: 32px auto;
-            background-color: #FFFFFF;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            border: 1px solid #E5E7EB;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 48px 0 32px 0;
-        }
-
-        .logo-text {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 32px;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            color: #1F1F1F;
-        }
-
-        .logo-subtitle {
-            display: block;
-            font-size: 10px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            margin-top: 4px;
-            color: #6B7280;
-        }
-
-        /* Hero Image Section */
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 280px;
-            overflow: hidden;
-            background-color: #F9FAFB;
-        }
-
-        @media (min-width: 768px) {
-            .hero {
-                height: 340px;
-            }
-        }
-
-        .hero-blur {
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 280px;
-            height: 280px;
-            background-color: #98FFD5;
-            border-radius: 50%;
-            opacity: 0.25;
-            filter: blur(50px);
-            z-index: 1;
-        }
-
-        .hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-gradient {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, #FFFFFF, transparent);
-            z-index: 3;
-            height: 80px;
-        }
-
-        /* Content Area */
-        .content {
-            padding: 40px 32px 64px 32px;
-        }
-
-        @media (min-width: 768px) {
-            .content {
-                padding: 48px 64px 80px 64px;
-            }
-        }
-
-        .status-badge {
-            display: block;
-            width: fit-content;
-            margin: 0 auto 24px auto;
-            padding: 6px 16px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            background-color: #E6FFEF;
-            color: #00854D;
-            border-radius: 2px;
-        }
-
-        .main-heading {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            text-align: center;
-            margin-bottom: 24px;
-            line-height: 1.2;
-            color: #1F1F1F;
-            font-weight: 400;
-        }
-
-        .main-heading-italic {
-            font-style: italic;
-        }
-
-        .prose-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .prose-greeting {
-            font-size: 18px;
-            color: #1F1F1F;
-            margin-bottom: 12px;
-        }
-
-        .prose-text {
-            color: #6B7280;
-            font-weight: 400;
-            font-size: 15px;
-        }
-
-        /* CTA Button */
-        .cta-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px 32px;
-            font-size: 13px;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            background-color: #98FFD5;
-            color: #1F1F1F;
-            border: none;
-            cursor: pointer;
-            border-radius: 2px;
-            text-decoration: none;
-            margin: 0 auto;
-            width: fit-content;
-            transition: transform 0.2s ease;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .cta-icon {
-            margin-left: 8px;
-            font-size: 18px;
-        }
-
-        .divider {
-            width: 100%;
-            height: 1px;
-            background-color: #E5E7EB;
-            margin: 48px 0;
-        }
-
-        /* Order Summary */
-        .summary-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            margin-bottom: 32px;
-            text-align: center;
-            font-style: italic;
-        }
-
-        .product-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .product-image {
-            width: 80px;
-            height: 80px;
-            flex-shrink: 0;
-            background-color: #F3F4F6;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .product-details {
-            flex-grow: 1;
-        }
-
-        .product-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            color: #1F1F1F;
-        }
-
-        .product-specs {
-            font-size: 13px;
-            color: #6B7280;
-            margin-top: 4px;
-        }
-
-        .product-price {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .price-summary {
-            border-top: 1px dashed #E5E7EB;
-            padding-top: 24px;
-            max-width: 280px;
-            margin-left: auto;
-        }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #6B7280;
-            margin-bottom: 8px;
-        }
-
-        .price-row-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 18px;
-            font-weight: bold;
-            color: #1F1F1F;
-            padding-top: 12px;
-            margin-top: 12px;
-            border-top: 1px solid #E5E7EB;
-        }
-
-        /* Production Process */
-        .process-section {
-            background-color: #F9FAFB;
-            padding: 32px 24px;
-            border-radius: 4px;
-            margin: 48px 0;
-            border: 1px solid #F3F4F6;
-        }
-
-        .process-title {
-            font-size: 11px;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 32px;
-            color: #6B7280;
-        }
-
-        .process-timeline {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        .process-line {
-            position: absolute;
-            top: 6px;
-            left: 10%;
-            width: 80%;
-            height: 2px;
-            background-color: #E5E7EB;
-            z-index: 1;
-        }
-
-        .process-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-            flex: 1;
-        }
-
-        .process-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background-color: #D1D5DB;
-            border: 3px solid #F9FAFB;
-        }
-
-        .process-dot.active {
-            background-color: #98FFD5;
-            border-color: #E6FFEF;
-            box-shadow: 0 0 0 4px #E6FFEF;
-        }
-
-        .process-label {
-            font-size: 10px;
-            margin-top: 12px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #1F1F1F;
-        }
-
-        .process-label.inactive {
-            color: #9CA3AF;
-        }
-
-        /* Address Grid */
-        .address-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            padding-top: 40px;
-            border-top: 1px solid #E5E7EB;
-        }
-
-        @media (max-width: 600px) {
-            .address-section {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-        }
-
-        .address-block h5 {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            margin-bottom: 12px;
-        }
-
-        .address-block p {
-            font-size: 14px;
-            color: #6B7280;
-            line-height: 1.6;
-        }
-
-        .support-link {
-            display: inline-block;
-            margin-top: 12px;
-            font-size: 13px;
-            font-weight: bold;
-            color: #1F1F1F;
-            text-decoration: none;
-            border-bottom: 2px solid #98FFD5;
-        }
-
-        /* Footer */
-        .footer {
-            background-color: #F9FAFB;
-            padding: 48px 32px;
-            text-align: center;
-            border-top: 1px solid #E5E7EB;
-        }
-
-        .footer-text {
-            font-size: 12px;
-            color: #9CA3AF;
-            margin-bottom: 8px;
-        }
-
-        .footer-link {
-            color: #6B7280;
-            text-decoration: underline;
-        }
-
-        @media (max-width: 480px) {
-            .product-item {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .main-heading {
-                font-size: 26px;
-            }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
 </head>
 
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="logo">
-                <span class="logo-text">String</span>
-                <span class="logo-subtitle">Studio</span>
-            </div>
+<body
+    class="bg-gray-50 dark:bg-background-dark font-display antialiased min-h-screen flex flex-col items-center py-8 sm:py-12 px-4">
+    <!-- Email Container -->
+    <div
+        class="w-full max-w-[600px] bg-white dark:bg-[#94FFC4] rounded-3xl shadow-sm border border-[#e7f4ec] dark:border-[#2a4535] overflow-hidden">
+        <!-- Header -->
+        <header
+            class="flex flex-col items-center justify-center pt-8 pb-6 border-b border-[#e7f4ec] dark:border-[#2a4535] bg-white dark:bg-[#94FFC4]">
+           
+            <img class="h-14" src="https://stringstudio.vercel.app/images/stringlogo.png" alt="String Studio Logo" />
         </header>
-
-        <div class="hero">
-            <div class="hero-blur"></div>
-            <img alt="Artisan String Art" class="hero-image"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRZPy3ny6PGniaVMnUvUoGJ2Lt9eAL_jnWGL2I3_1gqaDOT0IAMSLBIqBdnXBRlSThbatLFZSvebvobHEzStTHjXLlAe59Vbv2Hyve59lzIpu-jaL8LajwxEaOXbsowKRUMkVIHe9lBpv7PvaypMAI0UsvJzSrQvVYWdbbhrPudeCSja4YkGHf9gNXorCcJloPMEVyx3mhwJIOdBlvGT9i9T5C8CbGV_TOepx8cUTvSv-OsSYw7Z7RRiSe29M0X1RDWCYdfrfWZSTn" />
-            <div class="hero-gradient"></div>
-        </div>
-
-        <div class="content">
-            <span class="status-badge">Order #80294 Confirmed</span>
-
-            <h1 class="main-heading">Order Received & <br><span class="main-heading-italic">In Progress</span></h1>
-
-            <div class="prose-section">
-                <p class="prose-greeting">Dear <strong>Sophia</strong>,</p>
-                <p class="prose-text">Your order is in good hands—our artisans are now preparing to weave your memories
-                    into art. We are reviewing every detail to ensure perfection.</p>
+        <!-- Main Content -->
+        <main class="flex flex-col">
+            <!-- Hero Section -->
+            <div class="px-8 pt-10 pb-6 text-center">
+                <div
+                    class="inline-flex items-center justify-center size-16 rounded-full bg-accent/20 mb-6 text-primary animate-pulse">
+                    <span class="material-symbols-outlined text-4xl">check_circle</span>
+                </div>
+                <h1
+                    class="text-text-main dark:text-white text-3xl md:text-4xl font-bold mb-4 font-serif tracking-tight">
+                    Order Received</h1>
+                <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed max-w-md mx-auto">
+                    Namaste <span class="font-bold text-text-main dark:text-white">Aarav</span>! Your order has been
+                    received; soon you will be contacted for payment via WhatsApp or the number you provided.
+                </p>
             </div>
-
-            <a href="#" class="cta-button">
-                View Order Status
-                <span class="material-icons cta-icon">arrow_forward</span>
-            </a>
-
-            <div class="divider"></div>
-
-            <div class="summary-section">
-                <h3 class="summary-title">Order Summary</h3>
-
-                <div class="product-item">
-                    <div class="product-image">
-                        <img alt="Portrait String Art"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwndUizXD8UgjVBiSZKdQbwodcGSpjX1ILULMpfnz3d9b7kjcQJs7HOeNDV6GiAf2NdV0v5EyDTkttXUEbmL9CpIq18z1Mj3vVtMeJuNYEZxN63y6daweg5pPP9nElZ7QVg4rc7o_YB_8ru8VtM0P1Oi9GrcOxzqa99gctsrnTRaITu-5uvZlIOiu1mmezsE8vOQsSMGGN59IUB5dFscsLdgAAHidzrwfrzpGDAAbPSvGjzYJwsVYefZRSSA1LohxLrTvBjJLVzmwb" />
+            <!-- Order Summary Card -->
+            <div class="px-6 sm:px-10 py-6">
+                <div
+                    class="bg-background-light dark:bg-[#0d1c13] rounded-lg border border-[#cee8da] dark:border-[#2a4535] overflow-hidden">
+                    <!-- Order Info Header -->
+                    <div
+                        class="flex flex-wrap gap-4 justify-between items-center p-5 border-b border-[#cee8da] dark:border-[#2a4535] bg-white/50 dark:bg-white/5">
+                        <div class="flex flex-col">
+                            <span
+                                class="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold mb-1">Order
+                                No.</span>
+                            <span class="text-text-main dark:text-white font-bold font-serif text-lg">#SSN-8942</span>
+                        </div>
+                        <div class="flex flex-col text-right">
+                            <span
+                                class="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold mb-1">Date</span>
+                            <span class="text-text-main dark:text-white font-medium text-sm">Oct 24, 2023</span>
+                        </div>
                     </div>
-                    <div class="product-details">
-                        <h4 class="product-name">Portrait of a Loved One</h4>
-                        <p class="product-specs">Size: Medium (24" x 36")<br>Frame: Walnut Wood</p>
+                    <!-- Table Items -->
+                    <div class="p-5 space-y-4">
+                        <!-- Item 1 -->
+                        <div class="flex justify-between items-start gap-4 text-sm">
+                            <div class="flex-1">
+                                <p class="font-bold text-text-main dark:text-white">Handmade Guitar Strap</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Full Grain Leather - Vintage
+                                    Brown</p>
+                            </div>
+                            <div class="text-gray-500 dark:text-gray-400 text-xs font-medium pt-0.5">x1</div>
+                            <div class="font-bold text-text-main dark:text-white min-w-[70px] text-right">Rs. 1,500
+                            </div>
+                        </div>
+                        <!-- Divider -->
+                        <div class="h-px w-full bg-[#cee8da] dark:bg-[#2a4535]"></div>
+                        <!-- Item 2 -->
+                        <div class="flex justify-between items-start gap-4 text-sm">
+                            <div class="flex-1">
+                                <p class="font-bold text-text-main dark:text-white">Custom Pick Set</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Jazz III Style - Assorted
+                                    Colors</p>
+                            </div>
+                            <div class="text-gray-500 dark:text-gray-400 text-xs font-medium pt-0.5">x1</div>
+                            <div class="font-bold text-text-main dark:text-white min-w-[70px] text-right">Rs. 500</div>
+                        </div>
                     </div>
-                    <div class="product-price">$245.00</div>
-                </div>
-
-                <div class="price-summary">
-                    <div class="price-row"><span>Subtotal</span><span>$245.00</span></div>
-                    <div class="price-row"><span>Shipping</span><span>Free</span></div>
-                    <div class="price-row"><span>Taxes</span><span>$12.50</span></div>
-                    <div class="price-row-total"><span>Total</span><span>$257.50</span></div>
+                    <!-- Totals -->
+                    <div class="bg-[#e7f4ec]/30 dark:bg-white/5 p-5 border-t border-[#cee8da] dark:border-[#2a4535]">
+                        <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <span>Subtotal</span>
+                            <span>Rs. 2,000</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-3">
+                            <span>Shipping (Standard)</span>
+                            <span>Rs. 150</span>
+                        </div>
+                        <div
+                            class="flex justify-between items-center pt-3 border-t border-dashed border-[#cee8da] dark:border-[#2a4535]">
+                            <span class="font-bold text-text-main dark:text-white">Total</span>
+                            <span class="font-bold text-black text-xl">Rs. 2,150</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="process-section">
-                <h4 class="process-title">Production Process</h4>
-                <div class="process-timeline">
-                    <div class="process-line"></div>
-                    <div class="process-step">
-                        <div class="process-dot active"></div>
-                        <span class="process-label">Received</span>
+            <!-- Details Columns -->
+            <div class="px-8 pb-8 grid grid-cols-1 md:grid-cols-2 gap-8 mt-2">
+                <!-- Shipping -->
+                <div class="flex flex-col gap-2">
+                    <h3
+                        class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-1">
+                        <span class="material-symbols-outlined text-primary text-base">local_shipping</span>
+                        Shipping Address
+                    </h3>
+                    <div
+                        class="text-sm text-text-main dark:text-gray-300 leading-relaxed pl-6 border-l-2 border-[#cee8da] dark:border-[#2a4535]">
+                        <p class="font-bold">Aarav Sharma</p>
+                        <p>Lazimpat, Ward No. 2</p>
+                        <p>Kathmandu, Bagmati 44600</p>
+                        <p>Nepal</p>
                     </div>
-                    <div class="process-step">
-                        <div class="process-dot"></div>
-                        <span class="process-label inactive">Weaving</span>
-                    </div>
-                    <div class="process-step">
-                        <div class="process-dot"></div>
-                        <span class="process-label inactive">Shipped</span>
+                </div>
+                <!-- Contact -->
+                <div class="flex flex-col gap-2">
+                    <h3
+                        class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-2 mb-1">
+                        <span class="material-symbols-outlined text-primary text-base">smartphone</span>
+                        Contact Provided
+                    </h3>
+                    <div
+                        class="text-sm text-text-main dark:text-gray-300 leading-relaxed pl-6 border-l-2 border-[#cee8da] dark:border-[#2a4535]">
+                        <p class="font-bold">+977 980-1234567</p>
+                        <p class="text-gray-500 text-xs mt-1">We will use this number for payment coordination.</p>
                     </div>
                 </div>
             </div>
-
-            <div class="address-section">
-                <div class="address-block">
-                    <h5>Shipping Address</h5>
-                    <p>Sophia Anderson<br>124 Artistry Lane, Apt 4B<br>Design District, NY 10013</p>
-                </div>
-                <div class="address-block">
-                    <h5>Need Assistance?</h5>
-                    <p>If you have specific instructions, please reply to this email within 24 hours.</p>
-                    <a class="support-link" href="#">Contact Support</a>
+            <!-- CTA -->
+            <div class="px-8 py-8 text-center bg-white dark:bg-[#94FFC4]">
+                <button
+                    class="w-full sm:w-auto min-w-[200px] cursor-pointer inline-flex items-center justify-center rounded-lg h-12 px-6 bg-primary hover:bg-[#1ee06e] text-text-main text-sm font-bold tracking-wide transition-colors shadow-sm">
+                    View Order Details
+                </button>
+                <div class="mt-6 flex justify-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                    <a class="hover:text-primary underline decoration-dotted" href="#">Returns Policy</a>
+                    <span>•</span>
+                    <a class="hover:text-primary underline decoration-dotted" href="#">Support</a>
                 </div>
             </div>
-        </div>
-
-        <footer class="footer">
-            <p class="footer-text">© 2024 String Studio. Balaju, Kathmandu, Nepal</p>
-            <p class="footer-text">
-                <a class="footer-link" href="#">Unsubscribe</a> from these notifications.
+        </main>
+        <!-- Footer -->
+        <footer
+            class="bg-background-light dark:bg-[#F5F8F7] border-t border-[#e7f4ec] dark:border-[#2a4535] p-6 text-center">
+            <div class="flex justify-center gap-6 mb-4">
+                <!-- Facebook Icon -->
+                <a class="text-gray-400 hover:text-primary transition-colors" href="#">
+                    <svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
+                        </path>
+                    </svg>
+                </a>
+                <!-- Instagram Icon -->
+                <a class="text-gray-400 hover:text-primary transition-colors" href="#">
+                    <svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+            <p class="text-[10px] text-gray-500 dark:text-gray-400 mb-2 font-medium uppercase tracking-widest">
+                String Studio Nepal
+            </p>
+            <p class="text-xs text-gray-400 dark:text-gray-500">
+                You received this email because you placed an order on our website.
             </p>
         </footer>
     </div>
