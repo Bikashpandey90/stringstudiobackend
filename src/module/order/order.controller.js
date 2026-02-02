@@ -1,4 +1,3 @@
-const { WorkspaceResourceType } = require("@elevenlabs/elevenlabs-js/api");
 const authSvc = require("../auth/auth.service");
 const orderSvc = require("./order.service");
 
