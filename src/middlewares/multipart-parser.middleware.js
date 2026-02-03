@@ -1,8 +1,7 @@
-const { allow } = require('joi');
 const multer = require('multer');
 const myStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        let path = './public/'
+        let path = "./public/"
         cb(null, path);
     },
     filename: (req, file, cb) => {
@@ -33,7 +32,7 @@ const uploader = (type = 'image') => {
             }
         },
         limits: {
-            fileSize: 5 * 1024 * 1024 // 5 MB
+            fileSize: 1024 * 1024 * 5 // 5 MB
         }
     })
 }
