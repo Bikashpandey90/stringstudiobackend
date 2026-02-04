@@ -45,7 +45,7 @@ class emailService {
                 html: message
 
             })
-            console.log("Email response: ", response)
+            // console.log("Email response: ", response)
             return true
 
         } catch (exception) {
