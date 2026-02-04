@@ -38,7 +38,7 @@ class emailService {
         }
     ) => {
         try {
-            let response = await this.#transport.sendMail({
+            this.#transport.sendMail({
                 to: to,
                 from: process.env.SMTP_FROM,
                 subject: subject,
